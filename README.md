@@ -4,6 +4,9 @@ This acts as a repo of guides and documents specific to the Wildlife Licencing T
 
 > We acknowledge that the correct spelling is "licensing" but we retain "licencing" for the time being!
 
+## Contents
+
+- [Releasing](releasing.md)
 
 ## Contributing to this project
 
