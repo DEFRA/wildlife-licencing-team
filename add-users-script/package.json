@@ -1,0 +1,20 @@
+{
+  "name": "add-users-script",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "argon2": "^0.31.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
+  }
+}
