@@ -1,4 +1,4 @@
-# Add users script
+# Adding beta users
 
 We are currently in private beta, running in the preproduction environment. At present we have no interface for adding new users to the beta; instead, we use this script which generates SQL to be run on the preprod database.
 

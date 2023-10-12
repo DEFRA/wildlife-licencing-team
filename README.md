@@ -7,6 +7,7 @@ This acts as a repo of guides and documents specific to the Wildlife Licencing T
 ## Contents
 
 - [Releasing](releasing.md)
+- [Adding beta users](add-users-script/README.md)
 
 ## Contributing to this project
 
