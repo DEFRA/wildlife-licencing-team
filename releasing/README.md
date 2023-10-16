@@ -31,7 +31,11 @@ lerna publish
 
 A list of version numbers will be shown corresponding to a major, minor or patch bump. Select the appropriate version, noting that as this is to be a release candidate it should be a version number ending `-alpha.0`. Note this version number for later!
 
+<img src="version_number.png" width=50%>
+
 The projects to be published will be shown. Ensure these are correct and then answer `y` to start the publishing process.
+
+<img src="publish_prompt.png" width=50%>
 
 While publishing is taking place, go to the JIRA board and under Development > Releases, update the build version number to the one we noted.
 
@@ -45,9 +49,13 @@ Go to our [Jenkins instance](https://new-jenkins.aws-int.defra.cloud/) and log i
 
 Go the folder corresponding to the environment we're deploying to; as we are deploying a release candiate to the test environment, we want the test folder.
 
+<img src="test_folder.png">
+
 Go to the Build tab and run all the build jobs. These don't require manual intervention and can all be run at the same time, so just click down through the "play" icons on the right.
 
 > We build images for everything, regardless of whether or not they have changed since the last version.
+
+<img src="build_tab.png">
 
 The build jobs will build a docker image for each service and add it to our Amazon ECR (Elastic Container Registry).
 
@@ -61,7 +69,13 @@ Once the build jobs have completed, we can move on to the deploy stage.
 
 Staying within Jenkins, go to the Deploy tab. These jobs require user input so cannot be run by clicking down through the "play" icons.
 
-Click into the first job and select Build Now on the left. After a moment you will be prompted to select the image to be deployed.
+Click into the first job and select Build Now on the left.
+
+<img src="build_now.png">
+
+After a moment you will be prompted to select the image to be deployed.
+
+<img src="select_image.png">
 
 > The prompt doesn't always appear automatically; you may need to click within the window or even the middle box to give it focus and display the prompt.
 
