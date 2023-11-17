@@ -86,3 +86,45 @@ Select the required version and allow the job to complete, then move on to the n
 > As with releasing we deploy everything, regardless of whether there has been a change since the last version.
 
 Assuming we're releasing to enable QA to test our changes, we should now ping them to let them know that the test environment is now running the latest release.
+
+# Releasing to users
+
+> Note that these instructions are a work in progress!
+
+When `develop` has a version we want to deploy to users, we go through additional steps.
+
+QA will run their tests on `develop` and sign it off if they are happy.
+
+We perform one PR from `develop` to `master`.
+
+We add the release note.
+
+When merging `develop` to `master`, there'll be a lot of change. Conflicts should be fairly straightforward to resolve but anything complex (eg. `package-lock.json` conflicts) should be resolved by simply using whatever is coming in from `develop`
+
+We use `lerna publish` on the `master` branch to publish our new version.
+
+Log into Jenkins and go to the test folder. There's a global variable that points to the branch. Change this to point to master and deploy to test. Get QA to run the tests.
+
+Once done, revert the variable back to its original value.
+
+We need to find out the comms ourselves: [go via Astrid, Netty or Doug]
+* Who's using it, how to communicate it
+
+Further down the line we need to figure out db changes using Liquibase;
+* There's a note on running it locally via Docker
+
+But once we're happy, we build and deploy same as normal on Jenkins.
+
+Once all happy do a smoke test:
+
+* Log into preprod as a user
+* Push an application up
+* Make it a licence
+* Check it works
+* Push a return up
+* Check it all works
+* Keep a track of the keys as we go and ask Dele to remove them
+
+Afterwards, develop will be behind master in terms of version.
+
+We can either continue to work on dev; or we can publish a new release candidate version straight away.
