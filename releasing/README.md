@@ -107,15 +107,11 @@ Log into Jenkins and go to the test folder. There's a global variable that point
 
 Once done, revert the variable back to its original value.
 
-We need to find out the comms ourselves: [go via Astrid, Netty or Doug]
-* Who's using it, how to communicate it
+Message the `PreProd - RELEASE SDDS` Teams channel to say that a release is ready. If a release note is requested, these are for the beta users so it's recommend to use plainer English than in the release note in the repo.
 
-Further down the line we need to figure out db changes using Liquibase;
-* There's a note on running it locally via Docker
+The people in the channel will assist with scheduling the release and notifying the required people. Releases to preprod are generally done out of hours: preferably before 9am or after 6pm. Note that we can build the images for the preprod environment in advance in the same way as we do for other environments.
 
-But once we're happy, we build and deploy same as normal on Jenkins.
-
-Once all happy do a smoke test:
+Once the release is deployed to preprod, do a smoke test:
 
 * Log into preprod as a user
 * Push an application up
@@ -123,7 +119,8 @@ Once all happy do a smoke test:
 * Check it works
 * Push a return up
 * Check it all works
-* Keep a track of the keys as we go and ask Dele to remove them
+* Briefly test any other functionality as required
+* Keep a track of the keys as we go and ask backend devs to remove them aferwards
 
 Afterwards, develop will be behind master in terms of version.
 
