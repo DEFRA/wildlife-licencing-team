@@ -31,7 +31,11 @@ lerna publish
 
 A list of version numbers will be shown corresponding to a major, minor or patch bump. Select the appropriate version, noting that as this is to be a release candidate it should be a version number ending `-alpha.0`. Note this version number for later!
 
+<img src="version_number.png" width=50%>
+
 The projects to be published will be shown. Ensure these are correct and then answer `y` to start the publishing process.
+
+<img src="publish_prompt.png" width=50%>
 
 While publishing is taking place, go to the JIRA board and under Development > Releases, update the build version number to the one we noted.
 
@@ -45,9 +49,13 @@ Go to our [Jenkins instance](https://new-jenkins.aws-int.defra.cloud/) and log i
 
 Go the folder corresponding to the environment we're deploying to; as we are deploying a release candiate to the test environment, we want the test folder.
 
+<img src="test_folder.png">
+
 Go to the Build tab and run all the build jobs. These don't require manual intervention and can all be run at the same time, so just click down through the "play" icons on the right.
 
 > We build images for everything, regardless of whether or not they have changed since the last version.
+
+<img src="build_tab.png">
 
 The build jobs will build a docker image for each service and add it to our Amazon ECR (Elastic Container Registry).
 
@@ -61,7 +69,13 @@ Once the build jobs have completed, we can move on to the deploy stage.
 
 Staying within Jenkins, go to the Deploy tab. These jobs require user input so cannot be run by clicking down through the "play" icons.
 
-Click into the first job and select Build Now on the left. After a moment you will be prompted to select the image to be deployed.
+Click into the first job and select Build Now on the left.
+
+<img src="build_now.png">
+
+After a moment you will be prompted to select the image to be deployed.
+
+<img src="select_image.png">
 
 > The prompt doesn't always appear automatically; you may need to click within the window or even the middle box to give it focus and display the prompt.
 
@@ -72,3 +86,42 @@ Select the required version and allow the job to complete, then move on to the n
 > As with releasing we deploy everything, regardless of whether there has been a change since the last version.
 
 Assuming we're releasing to enable QA to test our changes, we should now ping them to let them know that the test environment is now running the latest release.
+
+# Releasing to users
+
+> Note that these instructions are a work in progress!
+
+When `develop` has a version we want to deploy to users, we go through additional steps.
+
+QA will run their tests on `develop` and sign it off if they are happy.
+
+We perform one PR from `develop` to `master`.
+
+We add the release note.
+
+When merging `develop` to `master`, there'll be a lot of change. Conflicts should be fairly straightforward to resolve but anything complex (eg. `package-lock.json` conflicts) should be resolved by simply using whatever is coming in from `develop`
+
+We use `lerna publish` on the `master` branch to publish our new version.
+
+Log into Jenkins and go to the test folder. There's a global variable that points to the branch. Change this to point to master and deploy to test. Get QA to run the tests.
+
+Once done, revert the variable back to its original value.
+
+Message the `PreProd - RELEASE SDDS` Teams channel to say that a release is ready. If a release note is requested, these are for the beta users so it's recommend to use plainer English than in the release note in the repo.
+
+The people in the channel will assist with scheduling the release and notifying the required people. Releases to preprod are generally done out of hours: preferably before 9am or after 6pm. Note that we can build the images for the preprod environment in advance in the same way as we do for other environments.
+
+Once the release is deployed to preprod, do a smoke test:
+
+* Log into preprod as a user
+* Push an application up
+* Make it a licence
+* Check it works
+* Push a return up
+* Check it all works
+* Briefly test any other functionality as required
+* Keep a track of the keys as we go and ask backend devs to remove them aferwards
+
+Afterwards, develop will be behind master in terms of version.
+
+We can either continue to work on dev; or we can publish a new release candidate version straight away.
