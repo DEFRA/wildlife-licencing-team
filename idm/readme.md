@@ -4,8 +4,9 @@ Firstly you need to find out what the old account for the user is. To do this as
 
 ```sql
 SELECT id from users WHERE username = 'richard.mohammed@defra.gov.uk'
-Its worth also asking if they user the same email address for the new account as the old one. If they did you can find their new account id with the following query: 
 ```
+Its worth also asking if they user the same email address for the new account as the old one. If they did you can find their new account id with the following query: 
+
 
 ```sql
 SELECT id
